@@ -1,0 +1,103 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #191919;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container Styling */
+.container {
+    background-color: #191818;
+    border-radius: 10px;
+    padding: 30px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Header */
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2cd182;
+}
+
+.subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #d1ac97;
+}
+
+/* Form Styling */
+.register-form .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.register-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #ffab3b;
+}
+
+.register-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1ac97;
+    border-radius: 5px;
+    background-color: #191818;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.register-form input:focus {
+    border-color: #2cd182;
+    outline: none;
+}
+
+/* Button Styling */
+.btn-primary {
+    width: 100%;
+    background-color: #2cd182;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #ffab3b;
+}
+
+/* Link Styling */
+.login-link {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #d1ac97;
+}
+
+.login-link a {
+    color: #2cd182;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,85 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    background-color: #191919; /* Dark background */
+    color: #ffffff;           /* Text color */
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container Styling */
+.container {
+    text-align: center;
+    padding: 20px;
+    background-color: #191818; /* Slightly lighter dark for the container */
+    border: 2px solid #d1ac97;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+}
+
+/* Logo and Tagline */
+.logo {
+    font-size: 2rem;
+    color: #2cd182; /* Green for the brand */
+    margin-bottom: 10px;
+}
+
+.tagline {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #d1ac97; /* Light tan for the tagline */
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+.buttons {
+    margin-top: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+/* Primary Button */
+.btn-primary {
+    background-color: #2cd182; /* Green */
+    color: #191818;
+}
+
+.btn-primary:hover {
+    background-color: #ffffff;
+    color: #2cd182;
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background-color: #ffab3b; /* Yellow-Orange */
+    color: #191818;
+}
+
+.btn-secondary:hover {
+    background-color: #ffffff;
+    color: #ffab3b;
+}

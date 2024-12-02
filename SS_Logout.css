@@ -1,0 +1,93 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #191919;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container Styling */
+.container {
+    background-color: #191818;
+    border-radius: 10px;
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Header */
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #2cd182;
+    margin-bottom: 20px;
+}
+
+/* Confirmation Box */
+.confirmation-box {
+    text-align: center;
+}
+
+.confirmation-box h2 {
+    font-size: 20px;
+    color: #ffab3b;
+    margin-bottom: 20px;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn-return {
+    background-color: #2cd182;
+    border: 2px solid #2cd182;
+}
+
+.btn-return:hover {
+    background-color: #191919;
+    color: #2cd182;
+    border-color: #ffab3b;
+}
+
+.btn-leave {
+    background-color: #ffab3b;
+    border: 2px solid #ffab3b;
+}
+
+.btn-leave:hover {
+    background-color: #191919;
+    color: #ffab3b;
+    border-color: #2cd182;
+}
+
+/* Footer */
+footer {
+    margin-top: 30px;
+    color: #d1ac97;
+    font-size: 14px;
+}
