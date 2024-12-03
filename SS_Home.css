@@ -1,0 +1,89 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #191919;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container Styling */
+.container {
+    background-color: #191818;
+    border-radius: 10px;
+    padding: 30px;
+    width: 90%;
+    max-width: 900px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Header */
+.header-left {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #2cd182;
+}
+
+.username {
+    font-size: 14px;
+    color: #d1ac97;
+    margin-top: 5px;
+}
+
+/* Options Section */
+.options {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.option {
+    background-color: #191919;
+    border: 1px solid #d1ac97;
+    border-radius: 8px;
+    padding: 20px;
+    width: 48%;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.option:hover {
+    background-color: #2cd182;
+    border-color: #ffab3b;
+    color: #191818;
+}
+
+.option h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #ffab3b;
+}
+
+.option p {
+    font-size: 14px;
+    color: #d1ac97;
+}
+
+/* Footer */
+footer {
+    margin-top: 30px;
+    color: #d1ac97;
+    font-size: 14px;
+}
