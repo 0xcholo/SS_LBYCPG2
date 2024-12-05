@@ -6,37 +6,65 @@ $success_message = ""; // To store success messages
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize and retrieve inputs
-    $username = mysqli_real_escape_string($conn, $_GET['username']);
-    $category = mysqli_real_escape_string($conn, $_POST['category']);
+    $username = $_GET['username'];
+    $category =  $_POST['category'];
+    $action = $_POST['action']; // Increase or decrease
     $amount_change = (float)$_POST['amount'];
 
     // Fetch user ID
     $sql = "SELECT id FROM users WHERE username = '$username'";
     $result = $conn->query($sql);
+
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $user_id = $row['id'];
 
-        // Check if the budget category exists for the user
-        $sql = "SELECT amount FROM budgets WHERE user_id = $user_id AND category = '$category'";
+        // Fetch the budget for the selected category
+        $sql = "SELECT budget_amount FROM budgets WHERE user_id = $user_id AND budget_type = '$category'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             $budget = $result->fetch_assoc();
-            $current_amount = $budget['amount'];
-            $new_amount = $current_amount + $amount_change;
+            $current_budget = $budget['budget_amount'];
 
-            // Validate new amount
-            if ($new_amount < 0) {
-                $error_message = "The budget amount cannot be less than $0.00.";
-            } else {
-                // Update the budget
-                $sql = "UPDATE budgets SET amount = $new_amount WHERE user_id = $user_id AND category = '$category'";
-                if ($conn->query($sql) === TRUE) {
-                    $success_message = "Budget updated successfully! New amount for $category is $" . number_format($new_amount, 2) . ".";
-                } else {
-                    $error_message = "Error updating budget: " . $conn->error;
+            // Fetch the user's wallet balance
+            $sql = "SELECT balance_amount FROM wallet WHERE user_id = $user_id";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                $wallet = $result->fetch_assoc();
+                $current_balance = $wallet['balance_amount'];
+
+                // Perform the appropriate action
+                if ($action === 'increase') {
+                    if ($amount_change > $current_balance) {
+                        $error_message = "Insufficient balance to increase the budget.";
+                    } else {
+                        $new_budget = $current_budget + $amount_change;
+                        $new_balance = $current_balance - $amount_change;
+
+                        // Update budget and wallet
+                        $conn->query("UPDATE budgets SET budget_amount = $new_budget WHERE user_id = $user_id AND budget_type = '$category'");
+                        $conn->query("UPDATE wallet SET balance_amount = $new_balance WHERE user_id = $user_id");
+
+                        $success_message = "Budget increased successfully! New $category budget: $" . number_format($new_budget, 2) . ". Remaining balance: $" . number_format($new_balance, 2) . ".";
+                    }
+                } elseif ($action === 'decrease') {
+                    if ($amount_change > $current_budget) {
+                        $error_message = "Cannot decrease more than the current budget.";
+                    } else {
+                        $new_budget = $current_budget - $amount_change;
+                        $new_balance = $current_balance + $amount_change;
+
+                        // Update budget and wallet
+                        $conn->query("UPDATE budgets SET budget_amount = $new_budget WHERE user_id = $user_id AND budget_type = '$category'");
+                        $conn->query("UPDATE wallet SET balance_amount = $new_balance WHERE user_id = $user_id");
+
+                        $success_message = "Budget decreased successfully! New $category budget: $" . number_format($new_budget, 2) . ". Updated balance: $" . number_format($new_balance, 2) . ".";
+                    }
                 }
+            } else {
+                $error_message = "Wallet not found.";
             }
         } else {
             $error_message = "No budget exists for the selected category.";
@@ -84,13 +112,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="amount">Enter Amount (positive to increase, negative to decrease):</label>
+                    <label for="amount">Enter Amount:</label>
                     <input type="number" step="0.01" id="amount" name="amount" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Update Budget</button>
-                <button type="button" class="btn btn-secondary" onclick="window.location.href='SS_Home.php?username=<?php echo urlencode($_GET['username']); ?>';">Return to Home Page</button>
+                <div class="button-group">
+                    <button type="submit" name="action" value="increase" class="btn btn-primary">Increase Budget</button>
+                    <button type="submit" name="action" value="decrease" class="btn btn-secondary">Decrease Budget</button>
+                </div>
+                <button type="button" class="btn btn-home" onclick="window.location.href='SS_Home.php?username=<?php echo urlencode($_GET['username']); ?>';">Return to Home Page</button>
             </form>
         </main>
     </div>
 </body>
 </html>
+

@@ -21,12 +21,13 @@ CREATE TABLE budgets (
 CREATE TABLE expenses (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
-    expense_type VARCHAR(50),
+    budget_id INT, 
     expense_amount DECIMAL(10,2) NOT NULL,
 
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (expense_type) REFERENCES budgets(budget_type)
+    FOREIGN KEY (budget_id) REFERENCES budgets(id)
 );
+
 
 CREATE TABLE wallet (
     id INT AUTO_INCREMENT PRIMARY KEY,

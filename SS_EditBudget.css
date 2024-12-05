@@ -128,3 +128,24 @@ button {
     opacity: 1;
     background-color: #ffab3b;
 }
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.btn-home {
+    margin-top: 20px;
+    background-color: #d1ac97;
+    color: #191919;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn-home:hover {
+    background-color: #ffab3b;
+}

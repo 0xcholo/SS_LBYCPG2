@@ -53,12 +53,6 @@ body {
     gap: 20px;
 }
 
-.logout-section {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
 .option {
     background-color: #191919;
     border: 1px solid #d1ac97;
@@ -68,11 +62,6 @@ body {
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-}
-
-.option.logout {
-    width: 100%; /* Ensures Logout button is centered on its row */
-    max-width: 300px; /* Restricts its size */
 }
 
 .option:hover {
@@ -111,3 +100,4 @@ footer {
     color: #d1ac97;
     font-size: 14px;
 }
+

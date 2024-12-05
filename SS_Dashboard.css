@@ -1,0 +1,38 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Styling for Budget Buttons */
+.budget-button {
+    background-color: #2cd182;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.budget-button:hover {
+    background-color: #219e6d;
+}
+
+/* Chart Container */
+#chart-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    display: none;
+}
+
+/* Wallet Balance Info */
+.wallet-info {
+    margin-top: 20px;
+    text-align: center;
+    color: #ffab3b;
+    font-size: 18px;
+}

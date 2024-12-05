@@ -12,7 +12,7 @@
             <div class="header-left">
                 <h1 class="logo">SpendSmart</h1>
                 <p class="username">Welcome, <?php  
-                    if(!empty($_GET['username'])) {
+                    if (!empty($_GET['username'])) {
                         $username = $_GET['username'];
                         echo htmlspecialchars($username); 
                     } 
@@ -20,30 +20,32 @@
             </div>
         </header>
         <main>
-        <section class="options">
-            <div class="option" onclick="window.location.href='SS_Dashboard.php?username=<?php if(!empty($_GET['username'])) { $username = $_GET['username']; echo urlencode($username); } ?>';">
-                <h2>Dashboard</h2>
-                <p>View your budgets and transactions.</p>
-            </div>
-            <div class="option" onclick="window.location.href='SS_UpdateWallet.php?username=<?php if(!empty($_GET['username'])) { $username = $_GET['username']; echo urlencode($username); } ?>';">
-                <h2>Update Wallet</h2>
-                <p>Add to your wallet balance.</p>
-            </div>
-            <div class="option" onclick="window.location.href='SS_NewBudget.php?username=<?php if(!empty($_GET['username'])) { $username = $_GET['username']; echo urlencode($username); } ?>';">
-                <h2>New Budget</h2>
-                <p>Create a new budget to track your expenses.</p>
-            </div>
-             <div class="option" onclick="window.location.href='SS_EditBudget.php?username=<?php if(!empty($_GET['username'])) { $username = $_GET['username']; echo urlencode($username); } ?>';">
-                <h2>Edit Budget</h2>
-                <p>Modify your existing budgets.</p>
-            </div>
-        </section>
-        <section class="logout-section">
-            <div class="option logout" onclick="window.location.href='SS_Logout.php?username=<?php if(!empty($_GET['username'])) { $username = $_GET['username']; echo urlencode($username); } ?>';">
-                <h2>Logout</h2>
-                <p>Sign out of your account.</p>
-            </div>
-        </section>
+            <section class="options">
+                <div class="option" onclick="window.location.href='SS_Dashboard.php?username=<?php if (!empty($_GET['username'])) { echo urlencode($username); } ?>';">
+                    <h2>Dashboard</h2>
+                    <p>View your budgets and transactions.</p>
+                </div>
+                <div class="option" onclick="window.location.href='SS_UpdateWallet.php?username=<?php if (!empty($_GET['username'])) { echo urlencode($username); } ?>';">
+                    <h2>Update Wallet</h2>
+                    <p>Add to your wallet balance.</p>
+                </div>
+                <div class="option" onclick="window.location.href='SS_NewBudget.php?username=<?php if (!empty($_GET['username'])) { echo urlencode($username); } ?>';">
+                    <h2>New Budget</h2>
+                    <p>Create a new budget to track your expenses.</p>
+                </div>
+                <div class="option" onclick="window.location.href='SS_EditBudget.php?username=<?php if (!empty($_GET['username'])) { echo urlencode($username); } ?>';">
+                    <h2>Edit Budget</h2>
+                    <p>Modify your existing budgets.</p>
+                </div>
+                <div class="option" onclick="window.location.href='SS_AddExpenses.php?username=<?php if (!empty($_GET['username'])) { echo urlencode($username); } ?>';">
+                    <h2>Add Expenses</h2>
+                    <p>Record your expenses to track spending.</p>
+                </div>
+                <div class="option" onclick="window.location.href='SS_Logout.php?username=<?php if (!empty($_GET['username'])) { echo urlencode($username); } ?>';">
+                    <h2>Logout</h2>
+                    <p>Sign out of your account.</p>
+                </div>
+            </section>
         </main>
         <footer>
             <p>SpendSmart &copy; 2024. All Rights Reserved.</p>
