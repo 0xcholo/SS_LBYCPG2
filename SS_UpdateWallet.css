@@ -1,0 +1,138 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #191919;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container Styling */
+.container {
+    background-color: #191818;
+    border-radius: 10px;
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Header */
+header {
+    margin-bottom: 20px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #2cd182;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: #d1ac97;
+    margin-top: 5px;
+}
+
+/* Form Styling */
+.wallet-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    color: #d1ac97;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #d1ac97;
+    border-radius: 5px;
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #2cd182;
+    box-shadow: 0 0 5px rgba(44, 209, 130, 0.5);
+}
+
+/* Button Styling */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-primary {
+    background-color: #2cd182;
+    color: #191919;
+}
+
+.btn-primary:hover {
+    background-color: #ffab3b;
+}
+
+.btn-secondary {
+    background-color: #d1ac97;
+    color: #191919;
+    opacity: 0.8;
+}
+
+.btn-secondary:hover {
+    opacity: 1;
+    background-color: #ffab3b;
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    color: #d1ac97;
+    font-size: 12px;
+}
+
+.current-balance {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #1e1e1e;
+    border: 1px solid #d1ac97;
+    border-radius: 5px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 16px;
+}
+
+.current-balance strong {
+    color: #2cd182;
+    font-size: 18px;
+}

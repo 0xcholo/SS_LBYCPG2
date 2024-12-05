@@ -19,7 +19,7 @@
                                                             } ?>?</h2>
                 <div class="button-group">
                     <a href="SS_Home.php?username=<?php echo urlencode($username); ?>" class="btn btn-return">
-                        Return to Home 
+                        Return to Home Page
                     </a>
                     <a href="SS_Login.php" class="btn btn-leave">
                         Leave

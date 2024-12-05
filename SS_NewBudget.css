@@ -72,8 +72,8 @@ body {
 
 /* Button Styling */
 .btn-primary {
-    width: 100%;
-    background-color: #2cd182;
+    width: 160px;
+    background-color: #2cd18147;
     border: none;
     padding: 10px;
     font-size: 16px;
@@ -86,7 +86,7 @@ body {
 
 .btn-primary:hover {
     color: black;
-    background-color: #ffab3b;
+    background-color: #2cd182;
 }
 
 /* Button Group Styling */
@@ -96,7 +96,7 @@ body {
 }
 
 .button-group .btn-secondary {
-    background-color: #d1ac97;
+    background-color: #ffaa3b58;
     border: none;
     padding: 10px;
     font-size: 16px;
@@ -111,5 +111,31 @@ body {
 
 .button-group .btn-secondary:hover {
     color: black;
-    background-color: #2cd182;
+    background-color: #ffab3b;
+}
+
+.wallet-info {
+    margin: 15px 0;
+    font-size: 16px;
+    color: #ffab3b;
+    text-align: center;
+}
+
+.wallet-info strong {
+    color: #2cd182;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.btn-secondary {
+    opacity: 0.8;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.btn-secondary:hover {
+    opacity: 1;
 }
