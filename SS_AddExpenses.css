@@ -18,7 +18,7 @@ body {
 
 /* Container Styling */
 .container {
-    background-color: #191818;
+    background-color: #282828;
     border-radius: 10px;
     padding: 30px;
     width: 90%;
@@ -88,34 +88,36 @@ select:focus {
 
 /* Button Styling */
 .btn-primary {
-    width: 50%;
-    background-color: #2cd18147;
+    width: 48%;
+    background-color: #2cd182;
     border: none;
     padding: 10px;
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
-    color: #ffffff;
+    color: #191919;
     font-weight: bold;
     margin-top: 10px;
+    transition: background-color 0.3s;
 }
 
 .btn-primary:hover {
-    background-color: #2cd182;
+    background-color: #27b371;
     color: black;
 }
 
 .btn-secondary {
-    background-color: #ffaa3b58;
+    background-color: #ffaa3b;
     border: none;
     padding: 10px;
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
-    color: #ffffff;
+    color: #191919;
     font-weight: bold;
     margin-top: 10px;
-    width: 60%;
+    width: 48%;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .btn-secondary:hover {

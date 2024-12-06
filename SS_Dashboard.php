@@ -1,32 +1,33 @@
 <?php
 include 'SS_Db_Conn.php';
 
-if (!empty($_GET['username'])) {
-    $username = $_GET['username'];
+// Fetch user data
+$username = $_GET['username'] ?? '';
+$sql_user = "SELECT id FROM users WHERE username = '$username'";
+$result_user = $conn->query($sql_user);
+$user = $result_user->fetch_assoc();
+$user_id = $user['id'] ?? null;
 
-    // Fetch user ID and wallet balance
-    $sql_user = "SELECT users.id, wallet.balance_amount 
-                 FROM users 
-                 LEFT JOIN wallet ON users.id = wallet.user_id 
-                 WHERE username = '$username'";
-    $result_user = $conn->query($sql_user);
-    $row_user = $result_user->fetch_assoc();
-    $user_id = $row_user["id"];
-    $wallet_balance = isset($row_user["balance_amount"]) ? (float)$row_user["balance_amount"] : 0.00;
+// Fetch wallet balance
+$sql_wallet = "SELECT balance_amount FROM wallet WHERE user_id = '$user_id'";
+$result_wallet = $conn->query($sql_wallet);
+$wallet = $result_wallet->fetch_assoc();
+$wallet_balance = $wallet['balance_amount'] ?? 0.00;
 
-    // Fetch budgets for the user
-    $sql_budgets = "SELECT id, budget_type, budget_amount FROM budgets WHERE user_id = '$user_id'";
-    $result_budgets = $conn->query($sql_budgets);
+// Fetch budgets
+$sql_budgets = "SELECT * FROM budgets WHERE user_id = '$user_id'";
+$result_budgets = $conn->query($sql_budgets);
+$budgets = [];
+while ($row = $result_budgets->fetch_assoc()) {
+    $budgets[] = $row;
+}
 
-    // Fetch expenses for each budget
-    $expenses = [];
-    while ($budget = $result_budgets->fetch_assoc()) {
-        $budget_id = $budget['id'];
-        $sql_expenses = "SELECT SUM(expense_amount) as total_expense FROM expenses WHERE user_id = '$budget_id'";
-        $result_expenses = $conn->query($sql_expenses);
-        $expense = $result_expenses->fetch_assoc();
-        $expenses[$budget_id] = $expense['total_expense'] ? $expense['total_expense'] : 0;
-    }
+// Fetch expenses grouped by budget_id
+$sql_expenses = "SELECT budget_id, expense_amount, created_at FROM expenses WHERE user_id = '$user_id' ORDER BY created_at ASC";
+$result_expenses = $conn->query($sql_expenses);
+$expenses_by_budget = [];
+while ($row = $result_expenses->fetch_assoc()) {
+    $expenses_by_budget[$row['budget_id']][] = $row; // Group expenses by budget_id
 }
 
 $conn->close();
@@ -37,62 +38,98 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard - SpendSmart</title>
     <link href="SS_Dashboard.css" rel="stylesheet" type="text/css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>SpendSmart Dashboard</h1>
-            <p>Welcome, <?php echo htmlspecialchars($username); ?>!</p>
+            <h1 class="logo">SpendSmart</h1>
+            <p class="subtitle">Dashboard</p>
         </header>
+        <main>
+            <div class="wallet-info">
+                <h2>Wallet Balance: <?php echo number_format($wallet_balance, 2); ?></h2>
+            </div>
+            <div class="budgets-section">
+                <?php foreach ($budgets as $budget): ?>
+                    <div class="budget-card">
+                        <button class="budget-toggle" onclick="toggleBudgetDetails('<?php echo $budget['id']; ?>')">
+                            <?php echo htmlspecialchars($budget['budget_type']); ?>
+                        </button>
+                        <div id="details-<?php echo $budget['id']; ?>" class="budget-details">
+                            <p>Budget Amount: <?php echo number_format($budget['budget_amount'], 2); ?></p>
+                            <h4>Expenses:</h4>
+                            <ul>
+                                <?php if (!empty($expenses_by_budget[$budget['id']])): ?>
+                                    <?php foreach ($expenses_by_budget[$budget['id']] as $expense): ?>
+                                        <li>
+                                            Amount: <?php echo number_format($expense['expense_amount'], 2); ?> - 
+                                            Date: <?php echo date('Y-m-d H:i:s', strtotime($expense['created_at'])); ?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <li>No expenses for this budget.</li>
+                                <?php endif; ?>
+                            </ul>
+                            <canvas id="chart-<?php echo $budget['id']; ?>" class="budget-chart"></canvas>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="button-group">
+                <button class="btn-home" onclick="window.location.href='SS_Home.php?username=<?php echo urlencode($username); ?>';">Back to Home Page</button>
+            </div>
+        </main>
+    </div>
+    <script>
+        function toggleBudgetDetails(budgetId) {
+            const details = document.getElementById('details-' + budgetId);
+            details.style.display = (details.style.display === 'block') ? 'none' : 'block';
+        }
 
-        <div class="budget-container">
-            <?php while ($budget = $result_budgets->fetch_assoc()) { ?>
-                <div class="budget-button" onclick="showChart(<?php echo $budget['id']; ?>)">
-                    <p><?php echo $budget['budget_type']; ?> - $<?php echo number_format($budget['budget_amount'], 2); ?></p>
-                </div>
-            <?php } ?>
-        </div>
+        document.addEventListener('DOMContentLoaded', function () {
+            const expenseData = <?php echo json_encode($expenses_by_budget); ?>;
 
-        <!-- Placeholder for the Chart -->
-        <div id="chart-container" style="display:none;">
-            <canvas id="myChart"></canvas>
-        </div>
+            for (const [budgetId, expenses] of Object.entries(expenseData)) {
+                const ctx = document.getElementById('chart-' + budgetId).getContext('2d');
 
-        <!-- Displaying the wallet balance -->
-        <div class="wallet-info">
-            <p>Wallet Balance: <strong>$<?php echo number_format($wallet_balance, 2); ?></strong></p>
-        </div>
+                const labels = expenses.map(e => new Date(e.created_at).toLocaleString());
+                const data = expenses.map(e => e.expense_amount);
 
-        <script>
-            function showChart(budgetId) {
-                // Example of dynamically updating the chart with data for the selected budget
-                document.getElementById('chart-container').style.display = 'block';
-                var ctx = document.getElementById('myChart').getContext('2d');
-                var myChart = new Chart(ctx, {
+                new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ['Budget Amount', 'Expenses'],
+                        labels: labels,
                         datasets: [{
-                            label: 'Budget vs Expenses',
-                            data: [<?php echo $budget['budget_amount']; ?>, <?php echo $expenses[$budget['id']]; ?>],
-                            backgroundColor: ['#2cd182', '#ffab3b'],
-                            borderColor: ['#2cd182', '#ffab3b'],
-                            borderWidth: 1
+                            label: 'Expenses',
+                            data: data,
+                            backgroundColor: 'rgba(44, 209, 130, 0.6)',
+                            borderColor: 'rgba(44, 209, 130, 1)',
+                            borderWidth: 1,
                         }]
                     },
                     options: {
+                        responsive: true,
                         scales: {
+                            x: {
+                                title: { display: true, text: 'Date & Time', color: '#ffffff' },
+                                ticks: { color: '#ffffff' }
+                            },
                             y: {
+                                title: { display: true, text: 'Expense Amount', color: '#ffffff' },
+                                ticks: { color: '#ffffff' },
                                 beginAtZero: true
                             }
+                        },
+                        plugins: {
+                            legend: { labels: { color: '#ffffff' } }
                         }
                     }
                 });
             }
-        </script>
-    </div>
+        });
+    </script>
 </body>
 </html>

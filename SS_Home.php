@@ -14,7 +14,7 @@
                 <p class="username">Welcome, <?php  
                     if (!empty($_GET['username'])) {
                         $username = $_GET['username'];
-                        echo htmlspecialchars($username); 
+                        echo $username; 
                     } 
                 ?></p>
             </div>
