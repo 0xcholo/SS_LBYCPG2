@@ -27,6 +27,10 @@
                     <input type="password" id="password" name="password" required>
                 </div>
                 <div class="form-group">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                </div>
+                <div class="form-group">
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required>
                 </div>
@@ -47,19 +51,25 @@
         $full_name = $_POST['full_name']; 
         $username = $_POST['username'];
         $password = $_POST['password'];
+        $confirm_password = $_POST['confirm_password'];
         $email = $_POST['email'];
 
-        // Hash the password for security
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-
-        // Insert the user into the database
-        $sql = "INSERT INTO users (full_name, username, password, email) VALUES ('$full_name', '$username', '$hashed_password', '$email')";
-
-        if ($conn->query($sql) === TRUE) {
-            echo "<p>Registration Successful!</p>";
-            echo "<p>You can now <a href='SS_Login.php'>Login</a>.</p>";
+        // Validate that password and confirm_password match
+        if ($password !== $confirm_password) {
+            echo "<p style='color: red;'>Error: Passwords do not match.</p>";
         } else {
-            echo "<p>Error: " . $conn->error . "</p>";
+            // Hash the password for security
+            $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+            // Insert the user into the database
+            $sql = "INSERT INTO users (full_name, username, password, email) VALUES ('$full_name', '$username', '$hashed_password', '$email')";
+
+            if ($conn->query($sql) === TRUE) {
+                echo "<p>Registration Successful!</p>";
+                echo "<p>You can now <a href='SS_Login.php'>Login</a>.</p>";
+            } else {
+                echo "<p style='color: red;'>Error: " . $conn->error . "</p>";
+            }
         }
 
         $conn->close();
